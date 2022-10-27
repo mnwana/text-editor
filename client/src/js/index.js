@@ -1,6 +1,6 @@
 import { Workbox } from 'workbox-window';
 import Editor from './editor';
-import {initdb,putDb,getDb} from './database';
+import {initdb} from './database';
 import '../css/style.css';
 
 const main = document.querySelector('#main');
@@ -36,6 +36,7 @@ if (typeof editor === 'undefined') {
 if ('serviceWorker' in navigator) {
   // register workbox service worker
   const workboxSW = new Workbox('/src-sw.js');
+  // const workboxSW = new Workbox('../src-sw.js');
   workboxSW.register();
 } else {
   console.error('Service workers are not supported in this browser.');
