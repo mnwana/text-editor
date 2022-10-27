@@ -2,13 +2,13 @@ import { openDB } from "idb";
 import "regenerator-runtime/runtime";
 
 export const initdb = async () =>
-  openDB("jate", 2, {
+  openDB("jate_db", 2, {
     upgrade(db) {
-      if (db.objectStoreNames.contains("jate")) {
+      if (db.objectStoreNames.contains("files")) {
         console.log("jate database already exists");
         return;
       }
-      db.createObjectStore("jate", { keyPath: "id", autoIncrement: true });
+      db.createObjectStore("files", { keyPath: "id", autoIncrement: true });
       console.log("jate database created");
     },
   });
@@ -17,9 +17,9 @@ export const initdb = async () =>
 export const putDb = async (content) => {
   console.log("PUT to the database");
 
-  const jateDB = await openDB("jate", 2);
+  const jateDB = await openDB("jate_db", 2);
 
-  const tx = jateDB.transaction("jate", "readwrite");
+  const tx = jateDB.transaction("jate_db", "readwrite");
 
   const store = tx.objectStore("files");
 
@@ -33,10 +33,10 @@ export const getDb = async () => {
   console.log("GET from the database");
 
   // Create a connection to the database database and version we want to use.
-  const jateDB = await openDB("jate", 2);
+  const jateDB = await openDB("jate_db", 2);
 
   // Create a new transaction and specify the database and data privileges.
-  const tx = jateDB.transaction("jate", "readonly");
+  const tx = jateDB.transaction("jate_db", "readonly");
 
   // Open up the desired object store.
   const store = tx.objectStore("files");
