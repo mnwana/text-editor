@@ -1,10 +1,19 @@
 import { Workbox } from 'workbox-window';
 import Editor from './editor';
-import './database';
+import {initdb,putDb,getDb} from './database';
 import '../css/style.css';
 
 const main = document.querySelector('#main');
 main.innerHTML = '';
+
+// Import images
+import Logo from '../images/logo.png';
+
+// On load functionality
+window.addEventListener('load', function () {
+  initdb();
+  document.getElementById('logo').src = Logo;
+});
 
 const loadSpinner = () => {
   const spinner = document.createElement('div');
