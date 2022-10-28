@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
@@ -22,6 +23,7 @@ module.exports = () => {
       new HtmlWebpackPlugin({
         template: './index.html',
         title: 'Webpack Plugin',
+        favicon: 'favicon.ico',
       }),
       new WebpackPwaManifest({
         name: 'Just Another Text Editor',
@@ -49,6 +51,11 @@ module.exports = () => {
         swSrc: './src-sw.js',
         swDest: 'service-worker.js',
       }), 
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: `favicon.ico`, to: 'favicon.ico' },
+        ]
+      }),
     ],
 
     module: {

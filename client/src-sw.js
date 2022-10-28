@@ -39,6 +39,6 @@ const matchCallback = ({ request }) => {
 // TODO: Implement asset caching
 registerRoute(
   ({ request }) =>
-  matchCallback,
+  matchCallback(request),
   pageCache
 );
