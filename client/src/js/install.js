@@ -1,20 +1,23 @@
 const butInstall = document.getElementById('buttonInstall');
-
-// Logic for installing the PWA
-// TODO: Add an event handler to the `beforeinstallprompt` event
-window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    butInstall.style.visibility = 'visible';
-    // TODO: Implement a click event handler on the `butInstall` element
-    butInstall.addEventListener('click', async (event) => {
-        event.preventDefault();
-        event.prompt();
-        butInstall.setAttribute('disabled', true);
-        butInstall.textContent = 'Installed!';
-    });
+// window.addEventListener('appinstalled', (event) => {  console.log('👍', 'appinstalled', event);});
+// code adapted from https://javascript.plainenglish.io/creating-a-browser-agnostic-pwa-install-button-41039f312fbe
+let prompt;
+window.addEventListener('beforeinstallprompt', function(e){
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  prompt = e;
 });
 
+butInstall.addEventListener('click', function(){
+   prompt.prompt();
+});
 
-
-// TODO: Add an handler for the `appinstalled` event
-window.addEventListener('appinstalled', (event) => {  console.log('👍', 'appinstalled', event);});
+let installed = false;
+butInstall.addEventListener('click', async function(){
+  prompt.prompt();
+  let result = await that.prompt.userChoice;
+  if (result&&result.outcome === 'accepted') {
+     installed = true;
+  }
+});
